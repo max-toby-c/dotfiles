@@ -1,5 +1,9 @@
 export PATH="$HOME/.local/bin:$PATH"
 
+# Word navigation
+bindkey "^[[1;5C" forward-word
+bindkey "^[[1;5D" backward-word
+
 # History
 HISTSIZE=10000
 SAVEHIST=10000

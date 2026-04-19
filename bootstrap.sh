@@ -36,6 +36,7 @@ sudo apt install -y \
     zsh \
     tmux \
     keychain \
+    ranger \
     unzip \
     build-essential \
     libssl-dev \

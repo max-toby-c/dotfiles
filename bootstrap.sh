@@ -4,7 +4,7 @@
 #
 # First time on a new machine:
 #   sudo apt install -y git
-#   git clone https://github.com/tobychappell/dotfiles.git ~/source/repos/dotfiles
+#   git clone https://github.com/max-toby-c/dotfiles.git ~/source/repos/dotfiles
 #   cd ~/source/repos/dotfiles && ./bootstrap.sh && ./install.sh
 #
 # After bootstrap completes:

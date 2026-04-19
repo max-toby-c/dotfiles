@@ -72,7 +72,15 @@ curl -sS https://starship.rs/install.sh | sh -s -- --yes
 
 # Lazydocker
 echo "==> Installing lazydocker..."
-curl https://raw.githubusercontent.com/jesseduffield/lazydocker/master/scripts/install_via_bash.sh | bash
+LAZYDOCKER_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazydocker/releases/latest" | grep '"tag_name"' | sed 's/.*"v\([^"]*\)".*/\1/')
+case "$ARCH" in
+    amd64|x86_64) LD_ARCH="x86_64" ;;
+    arm64|aarch64) LD_ARCH="arm64" ;;
+esac
+curl -OL "https://github.com/jesseduffield/lazydocker/releases/download/v${LAZYDOCKER_VERSION}/lazydocker_${LAZYDOCKER_VERSION}_Linux_${LD_ARCH}.tar.gz"
+tar -xzf "lazydocker_${LAZYDOCKER_VERSION}_Linux_${LD_ARCH}.tar.gz" lazydocker
+sudo install lazydocker -D -t /usr/local/bin/
+rm -f lazydocker "lazydocker_${LAZYDOCKER_VERSION}_Linux_${LD_ARCH}.tar.gz"
 
 # Lazygit
 echo "==> Installing lazygit..."

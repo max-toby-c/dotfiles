@@ -126,13 +126,12 @@ ln -sf "$(which fdfind)" ~/.local/bin/fd
 # delta — better git diffs
 DELTA_VERSION=$(curl -s "https://api.github.com/repos/dandavison/delta/releases/latest" | grep '"tag_name"' | sed 's/.*"\([^"]*\)".*/\1/')
 case "$ARCH" in
-    amd64|x86_64) DELTA_ARCH="x86_64" ;;
-    arm64|aarch64) DELTA_ARCH="aarch64" ;;
+    amd64|x86_64) DELTA_DEB_ARCH="amd64" ;;
+    arm64|aarch64) DELTA_DEB_ARCH="arm64" ;;
 esac
-curl -OL "https://github.com/dandavison/delta/releases/download/${DELTA_VERSION}/git-delta_${DELTA_VERSION}_${DELTA_ARCH}-unknown-linux-gnu.tar.gz"
-tar -xzf "git-delta_${DELTA_VERSION}_${DELTA_ARCH}-unknown-linux-gnu.tar.gz" --wildcards "*/delta"
-sudo install -m 755 "$(find . -name delta -type f)" /usr/local/bin/delta
-rm -rf "git-delta_${DELTA_VERSION}_${DELTA_ARCH}-unknown-linux-gnu.tar.gz" git-delta_*
+curl -OL "https://github.com/dandavison/delta/releases/download/${DELTA_VERSION}/git-delta_${DELTA_VERSION}_${DELTA_DEB_ARCH}.deb"
+sudo dpkg -i "git-delta_${DELTA_VERSION}_${DELTA_DEB_ARCH}.deb"
+rm -f "git-delta_${DELTA_VERSION}_${DELTA_DEB_ARCH}.deb"
 
 # zsh-autosuggestions
 git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions

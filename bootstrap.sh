@@ -180,6 +180,14 @@ curl -sSL https://dot.net/v1/dotnet-install.sh | bash /dev/stdin --channel LTS
 echo "==> Installing Claude Code..."
 npm install -g @anthropic-ai/claude-code
 
+# OpenAI Codex
+echo "==> Installing Codex..."
+npm install -g @openai/codex
+
+# GitHub Copilot CLI
+echo "==> Installing GitHub Copilot CLI..."
+gh extension install github/gh-copilot
+
 # -----------------------------------------------------------------------------
 # Set default shell to zsh
 echo "==> Setting zsh as default shell..."

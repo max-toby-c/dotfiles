@@ -8,6 +8,10 @@ ln -sf "$DOTFILES/.zshrc" ~/.zshrc
 mkdir -p ~/.ssh && chmod 700 ~/.ssh
 ln -sf "$DOTFILES/.ssh/config" ~/.ssh/config
 
+mkdir -p ~/.claude
+ln -sf "$DOTFILES/.claude/settings.json" ~/.claude/settings.json
+ln -sf "$DOTFILES/.claude/plugins" ~/.claude/plugins
+
 chmod +x "$DOTFILES/bootstrap.sh"
 
 echo "Done."

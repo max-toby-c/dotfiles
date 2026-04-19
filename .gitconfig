@@ -1,0 +1,16 @@
+[user]
+    name = Toby Chappell
+    email = toby.chappell@maxcontact.com
+
+[core]
+    editor = nvim
+
+[init]
+    defaultBranch = main
+
+[includeIf "gitdir:~/source/repos/"]
+    path = ~/.gitconfig-maxcontact
+
+[alias]
+    st = status
+    lg = log --oneline --graph --decorate

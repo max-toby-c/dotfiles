@@ -3,10 +3,14 @@
 # bootstrap.sh — Fresh machine setup
 #
 # First time on a new machine:
-#   sudo apt install -y git gh
-#   gh auth login
-#   git clone git@github.com:tobychappell/dotfiles.git ~/source/repos/dotfiles
+#   sudo apt install -y git
+#   git clone https://github.com/tobychappell/dotfiles.git ~/source/repos/dotfiles
 #   cd ~/source/repos/dotfiles && ./bootstrap.sh && ./install.sh
+#
+# After bootstrap completes:
+#   gh auth login
+#   ssh-keygen -t ed25519 -C "Toby.Chappell@maxcontact.com" -f ~/.ssh/id_ed25519
+#   gh ssh-key add ~/.ssh/id_ed25519.pub --title "$(hostname)"
 # =============================================================================
 set -e
 

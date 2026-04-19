@@ -18,7 +18,7 @@ fi
 
 ARCH=$(dpkg --print-architecture 2>/dev/null || uname -m)
 
-echo "==> Environment: $([ "$IS_WSL" = true ] && echo 'WSL' || echo 'Native Linux')"
+echo "==> Environment: $([ "$IS_WSL" = true ] && echo 'WSL' || echo 'Native Linux'), arch: ${ARCH}"
 
 # -----------------------------------------------------------------------------
 echo "==> Updating apt..."
@@ -70,12 +70,74 @@ curl -sS https://starship.rs/install.sh | sh -s -- --yes
 echo "==> Installing lazydocker..."
 curl https://raw.githubusercontent.com/jesseduffield/lazydocker/master/scripts/install_via_bash.sh | bash
 
+# Lazygit
+echo "==> Installing lazygit..."
+LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep '"tag_name"' | sed 's/.*"v\([^"]*\)".*/\1/')
+case "$ARCH" in
+    amd64|x86_64) LG_ARCH="x86_64" ;;
+    arm64|aarch64) LG_ARCH="arm64" ;;
+esac
+curl -OL "https://github.com/jesseduffield/lazygit/releases/download/v${LAZYGIT_VERSION}/lazygit_${LAZYGIT_VERSION}_Linux_${LG_ARCH}.tar.gz"
+tar -xzf "lazygit_${LAZYGIT_VERSION}_Linux_${LG_ARCH}.tar.gz" lazygit
+sudo install lazygit -D -t /usr/local/bin/
+rm -f lazygit "lazygit_${LAZYGIT_VERSION}_Linux_${LG_ARCH}.tar.gz"
+
+# -----------------------------------------------------------------------------
+# Performance tooling
+echo "==> Installing performance tools..."
+
+# fzf — fuzzy finder
+git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install --all
+
+# zoxide — smarter cd
+curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
+
+# eza — modern ls
+sudo apt install -y gpg
+wget -qO- https://raw.githubusercontent.com/eza-community/eza/main/deb.asc | sudo gpg --dearmor -o /etc/apt/keyrings/gierens.gpg
+echo "deb [signed-by=/etc/apt/keyrings/gierens.gpg] http://deb.gierens.de stable main" | sudo tee /etc/apt/sources.list.d/gierens.list
+sudo chmod 644 /etc/apt/keyrings/gierens.gpg /etc/apt/sources.list.d/gierens.list
+sudo apt update && sudo apt install -y eza
+
+# bat — better cat
+sudo apt install -y bat
+# Ubuntu installs bat as batcat, alias to bat
+mkdir -p ~/.local/bin && ln -sf /usr/bin/batcat ~/.local/bin/bat
+
+# ripgrep — faster grep
+sudo apt install -y ripgrep
+
+# fd — faster find
+sudo apt install -y fd-find
+ln -sf "$(which fdfind)" ~/.local/bin/fd
+
+# delta — better git diffs
+DELTA_VERSION=$(curl -s "https://api.github.com/repos/dandavison/delta/releases/latest" | grep '"tag_name"' | sed 's/.*"\([^"]*\)".*/\1/')
+case "$ARCH" in
+    amd64|x86_64) DELTA_ARCH="x86_64" ;;
+    arm64|aarch64) DELTA_ARCH="aarch64" ;;
+esac
+curl -OL "https://github.com/dandavison/delta/releases/download/${DELTA_VERSION}/git-delta_${DELTA_VERSION}_${DELTA_ARCH}-unknown-linux-gnu.tar.gz"
+tar -xzf "git-delta_${DELTA_VERSION}_${DELTA_ARCH}-unknown-linux-gnu.tar.gz" --wildcards "*/delta"
+sudo install -m 755 "$(find . -name delta -type f)" /usr/local/bin/delta
+rm -rf "git-delta_${DELTA_VERSION}_${DELTA_ARCH}-unknown-linux-gnu.tar.gz" git-delta_*
+
+# zsh-autosuggestions
+git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions
+
+# zsh-syntax-highlighting
+git clone https://github.com/zsh-users/zsh-syntax-highlighting ~/.zsh/zsh-syntax-highlighting
+
+# tmux plugin manager
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
 # -----------------------------------------------------------------------------
 # nvm (Node / TS / Vue / React)
 echo "==> Installing nvm..."
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+nvm install --lts
 
 # -----------------------------------------------------------------------------
 # pyenv (Python)
@@ -83,7 +145,7 @@ echo "==> Installing pyenv..."
 curl https://pyenv.run | bash
 
 # -----------------------------------------------------------------------------
-# Go (version manager via goenv, or direct install)
+# Go
 echo "==> Installing Go..."
 GO_VERSION="1.22.3"
 case "$ARCH" in
@@ -118,3 +180,4 @@ if [ "$IS_WSL" = true ]; then
     echo "  Reminder: enable WSL integration in Docker Desktop before using Docker."
 fi
 echo "  Open a new terminal then run: ./install.sh"
+echo "  Then open tmux and press prefix + I to install tmux plugins."

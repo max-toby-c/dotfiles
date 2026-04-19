@@ -11,6 +11,20 @@
 [includeIf "gitdir:~/source/repos/"]
     path = ~/.gitconfig-maxcontact
 
+[core]
+    pager = delta
+
+[delta]
+    navigate = true
+    side-by-side = true
+    line-numbers = true
+
+[merge]
+    conflictstyle = diff3
+
+[diff]
+    colorMoved = default
+
 [alias]
     st = status
     lg = log --oneline --graph --decorate

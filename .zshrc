@@ -6,11 +6,29 @@ SAVEHIST=10000
 setopt HIST_IGNORE_DUPS
 setopt SHARE_HISTORY
 
-# Aliases
-alias ll='ls -alF'
+# Aliases — standard
+alias ll='eza -alF --git'
+alias ls='eza'
+alias cat='bat'
+alias grep='rg'
+alias find='fd'
 alias gs='git status'
 alias gl='git lg'
 alias dc='docker compose'
+alias lg='lazygit'
+alias ld='lazydocker'
+
+# fzf
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# zoxide (replaces cd)
+eval "$(zoxide init zsh)"
+
+# zsh-autosuggestions
+source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+# zsh-syntax-highlighting (must be last)
+source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # nvm
 export NVM_DIR="$HOME/.nvm"
@@ -28,5 +46,5 @@ export PATH="$PATH:/usr/local/go/bin"
 export PATH="$PATH:$HOME/.dotnet"
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 
-# Starship prompt
+# Starship prompt (must be last)
 eval "$(starship init zsh)"

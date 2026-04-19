@@ -1,10 +1,7 @@
 export PATH="$HOME/.local/bin:$PATH"
 
-# SSH agent — reuse existing agent across panes
-if [ -z "$SSH_AUTH_SOCK" ]; then
-    eval "$(ssh-agent -s)" > /dev/null
-    ssh-add ~/.ssh/id_ed25519 2>/dev/null
-fi
+# SSH agent — persist across tmux panes and sessions
+eval "$(keychain --eval --quiet ~/.ssh/id_ed25519)"
 
 # Word navigation
 bindkey "^[[1;5C" forward-word

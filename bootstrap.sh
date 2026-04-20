@@ -42,6 +42,7 @@ sudo apt install -y \
     ranger \
     bubblewrap \
     weechat \
+    python3-pip \
     unzip \
     build-essential \
     libssl-dev \

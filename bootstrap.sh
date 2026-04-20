@@ -191,6 +191,20 @@ npm install -g @openai/codex
 echo "==> Installing GitHub Copilot CLI..."
 gh extension install github/gh-copilot
 
+# uv (Python package manager)
+echo "==> Installing uv..."
+curl -LsSf https://astral.sh/uv/install.sh | sh
+export PATH="$HOME/.local/bin:$PATH"
+
+# specify-cli (speckit)
+echo "==> Installing specify-cli..."
+uv tool install specify-cli --from git+https://github.com/github/spec-kit.git
+
+# The Courtroom (adversarial code review plugin)
+echo "==> Installing The Courtroom Claude Code plugin..."
+claude --dangerously-skip-permissions /plugin marketplace add JustineDaveMagnaye/the-courtroom
+claude --dangerously-skip-permissions /plugin install courtroom
+
 # -----------------------------------------------------------------------------
 # Set default shell to zsh
 echo "==> Setting zsh as default shell..."

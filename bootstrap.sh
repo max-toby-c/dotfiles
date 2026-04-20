@@ -11,6 +11,9 @@
 #   gh auth login
 #   ssh-keygen -t ed25519 -C "Toby.Chappell@maxcontact.com" -f ~/.ssh/id_ed25519
 #   gh ssh-key add ~/.ssh/id_ed25519.pub --title "$(hostname)"
+#   claude  # login, then run:
+#     /plugin marketplace add JustineDaveMagnaye/the-courtroom
+#     /plugin install courtroom
 # =============================================================================
 set -e
 
@@ -200,10 +203,6 @@ export PATH="$HOME/.local/bin:$PATH"
 echo "==> Installing specify-cli..."
 uv tool install specify-cli --from git+https://github.com/github/spec-kit.git
 
-# The Courtroom (adversarial code review plugin)
-echo "==> Installing The Courtroom Claude Code plugin..."
-claude --dangerously-skip-permissions /plugin marketplace add JustineDaveMagnaye/the-courtroom
-claude --dangerously-skip-permissions /plugin install courtroom
 
 # -----------------------------------------------------------------------------
 # Set default shell to zsh

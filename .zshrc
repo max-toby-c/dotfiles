@@ -53,5 +53,8 @@ export PATH="$PATH:/usr/local/go/bin"
 export PATH="$PATH:$HOME/.dotnet"
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 
+# uv
+export PATH="$PATH:$HOME/.local/bin"
+
 # Starship prompt (must be last)
 eval "$(starship init zsh)"

@@ -42,7 +42,6 @@ sudo apt install -y \
     ranger \
     bubblewrap \
     weechat \
-    python3-pip \
     unzip \
     build-essential \
     libssl-dev \
@@ -207,8 +206,9 @@ echo "==> Installing specify-cli..."
 uv tool install specify-cli --from git+https://github.com/github/spec-kit.git
 
 # wee-slack (Slack in terminal via WeeChat)
-echo "==> Installing wee-slack..."
-pip install wee-slack
+echo "==> Installing wee-slack v2.11.0..."
+mkdir -p ~/.weechat/python/autoload
+curl -o ~/.weechat/python/autoload/wee_slack.py https://raw.githubusercontent.com/wee-slack/wee-slack/v2.11.0/wee_slack.py
 
 
 # -----------------------------------------------------------------------------

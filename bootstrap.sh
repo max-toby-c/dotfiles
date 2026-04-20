@@ -40,6 +40,8 @@ sudo apt install -y \
     tmux \
     keychain \
     ranger \
+    bubblewrap \
+    weechat \
     unzip \
     build-essential \
     libssl-dev \
@@ -202,6 +204,10 @@ export PATH="$HOME/.local/bin:$PATH"
 # specify-cli (speckit)
 echo "==> Installing specify-cli..."
 uv tool install specify-cli --from git+https://github.com/github/spec-kit.git
+
+# wee-slack (Slack in terminal via WeeChat)
+echo "==> Installing wee-slack..."
+pip install wee-slack
 
 
 # -----------------------------------------------------------------------------
